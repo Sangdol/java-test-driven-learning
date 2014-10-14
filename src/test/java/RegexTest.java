@@ -1,6 +1,3 @@
-/**
- * @author hugh
- */
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -12,6 +9,8 @@ import static org.hamcrest.Matchers.*;
 /**
  * Regex Tutorials
  * - http://www.vogella.com/tutorials/JavaRegularExpressions/article.html
+ *
+ * @author hugh
  */
 public class RegexTest {
 
