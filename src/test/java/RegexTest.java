@@ -1,3 +1,4 @@
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -24,6 +25,12 @@ public class RegexTest {
 
         assertFalse(text.matches("ab"));
         assertFalse(text.matches("abc"));
+    }
+
+    @Test
+    public void numberMatches() {
+        assertTrue("123".matches("[0-9]+"));
+        assertFalse("a1".matches("[0-9]+"));
     }
 
     @Test
