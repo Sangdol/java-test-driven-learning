@@ -134,6 +134,22 @@ class SpockTest extends Specification {
     }
 
     /**
+     * http://spockframework.github.io/spock/docs/1.0/interaction_based_testing.html#_performing_side_effects
+     */
+    def "throw exception from mock"() {
+        given:
+        def stack = Mock(Stack)
+        stack.pop() >> {throw new EmptyStackException()}
+
+        when:
+        stack.pop()
+
+        then:
+        thrown(EmptyStackException)
+    }
+
+    /**
+     *
      * http://spockframework.github.io/spock/javadoc/1.0/spock/lang/Unroll.html
      *
      * Unroll make iterations of a data-driven feature visible separately
