@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Singular;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -17,10 +19,24 @@ import static org.hamcrest.Matchers.*;
 public class lombokTest {
 
     @Builder
-    static class PersonBuilder {
+    static class Person {
         private String name;
         private int age;
         @Singular private Set<String> occupations;
+    }
+
+    @Test
+    public void comparatorTest() throws Exception {
+        List<Person> persons = Arrays.asList(
+                Person.builder().age(10).build(),
+                Person.builder().age(5).build(),
+                Person.builder().age(20).build());
+
+        persons.sort((p1, p2) -> p1.age - p2.age);
+
+        assertThat(persons.get(0).age, is(5));
+        assertThat(persons.get(1).age, is(10));
+        assertThat(persons.get(2).age, is(20));
     }
 
     /**
@@ -28,13 +44,13 @@ public class lombokTest {
      */
     @Test
     public void builderTest() throws Exception {
-        PersonBuilder p = PersonBuilder.builder().name("SH").build();
+        Person p = Person.builder().name("SH").build();
 
         assertThat(p.name, is("SH"));
         assertThat(p.age, is(0));
         assertThat(p.occupations.size(), is(0));
 
-        p = PersonBuilder.builder().name("SH").age(33).occupation("Programmer").build();
+        p = Person.builder().name("SH").age(33).occupation("Programmer").build();
 
         assertThat(p.name, is("SH"));
         assertThat(p.age, is(33));
