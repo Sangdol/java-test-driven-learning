@@ -65,6 +65,20 @@ class SpockTest extends Specification {
         }
     }
 
+    def "don't put mocking and stubbing in different blocks"() {
+        setup:
+        def dao = Mock(Dao)
+        def service = new Service(dao)
+        dao.findOne() >> "one"
+
+        when:
+        def result = service.findOne()
+
+        then:
+        1 * dao.findOne()
+        result == null // WTF!!! It's because `1 * dao.findOne()` already called that.
+    }
+
     /**
      * https://spockframework.github.io/spock/docs/1.0/interaction_based_testing.html
      */
