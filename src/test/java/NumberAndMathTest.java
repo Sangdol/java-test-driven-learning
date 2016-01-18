@@ -9,7 +9,15 @@ import static org.junit.Assert.assertThat;
 /**
  * @author hugh
  */
-public class NumberTest {
+public class NumberAndMathTest {
+
+    @Test
+    public void roundTest() throws Exception {
+        assertThat(Math.round(1.4), is(1L));
+        assertThat(Math.round(1.5), is(2L));
+        assertThat(Math.round(1.45), is(1L));
+        assertThat(Math.round(-1.5), is(-1L));
+    }
 
     @Test
     public void intRangeTest() throws Exception {
