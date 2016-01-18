@@ -48,6 +48,8 @@ public class GuavaTest {
 
         Map<Integer, String> map = Maps.newHashMap(immutableMap);
         assertThat(map.size(), is(2));
+        
+        assertThat(map.get(1), is("one"));
     }
 
     @Test
