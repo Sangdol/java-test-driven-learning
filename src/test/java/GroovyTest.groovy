@@ -34,7 +34,24 @@ class GroovyTest extends Specification {
         "1" == 1 as String
     }
 
-    def "Set creating"() {
+    enum ABC {
+        A, B, C
+    }
+
+    def "Map creation"() {
+        when:
+        def map = [name: 'sd', age: 34]
+        def map2 = [1: 1, 2: 2]
+        def map3 = [(ABC.A): "A"]
+
+        then:
+        map.name == 'sd'
+        map.get("age") == 34
+        map2.get(1) == 1
+        map3.get(ABC.A) == "A"
+    }
+
+    def "Set creation"() {
         when:
         def list = [1, 2, 3]
         def set = [1, 2, 3] as Set
