@@ -57,7 +57,7 @@ public class StandardCalendarTest {
      * http://stackoverflow.com/questions/25747499/java-8-calculate-difference-between-two-localdatetime
      */
     @Test
-    public void untilMonthsTest() throws Exception {
+    public void diffTest() throws Exception {
         LocalDateTime start = LocalDateTime.of(2015, 1, 10, 10, 10);
         LocalDateTime end = LocalDateTime.of(2015, 2, 10, 10, 10);
 
@@ -71,6 +71,13 @@ public class StandardCalendarTest {
         assertThat(start.until(end, ChronoUnit.MONTHS), is(0l));
 
         assertThat(ChronoUnit.MONTHS.between(start, end), is(0l));
+
+        assertThat(ChronoUnit.DAYS.between(start, end), is(29L));
+        assertThat(ChronoUnit.SECONDS.between(start, end), is(2505600L));
+        assertThat(ChronoUnit.SECONDS.between(end, start), is(-2505600L));
+
+        assertThat(ChronoUnit.SECONDS.between(start, end),
+                is(start.until(end, ChronoUnit.SECONDS)));
     }
     
     @Test
