@@ -1,18 +1,20 @@
 package Java8;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 /**
  * http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
+ * http://stackoverflow.com/questions/31922866/why-should-java-8s-optional-not-be-used-in-arguments?lq=1 - not for parameters?
  *
  * @author hugh
  */
