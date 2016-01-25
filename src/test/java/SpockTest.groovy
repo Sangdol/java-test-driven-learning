@@ -107,6 +107,41 @@ class SpockTest extends Specification {
         service.findOne() == "three"
     }
 
+    def "multiple paris of when then test"() {
+        setup:
+        def dao = Mock(Dao)
+        def service = new Service(dao)
+
+        when:
+        dao.findOne() >> "two"
+        then:
+        service.findOne() == "two"
+
+        when:
+        dao.findOne() >> "three" // It doesn't override the previous action.
+        then:
+        service.findOne() == "two"  // WTF!!! Because it doesn't call 'setup' for each when.
+        service.findOne() == "two"
+        service.findOne() == "two"
+    }
+
+    def "block inside then"() {
+        setup:
+        def dao = Mock(Dao)
+        def service = new Service(dao)
+        def b = true
+        dao.findOne() >> "two"
+
+        when:
+        def result = service.findOne()
+
+        then:
+        if (b) {
+            result == "three" // Not evaluating
+            assert result == "two" //
+        }
+    }
+
     def "mocking - interaction check"() {
         setup:
         def dao = Mock(Dao)
