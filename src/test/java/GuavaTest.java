@@ -1,3 +1,4 @@
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -10,9 +11,19 @@ import java.util.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 /**
+ * https://github.com/google/guava/wiki
+ *
  * @author hugh
  */
 public class GuavaTest {
+
+    /**
+     * https://github.com/google/guava/wiki/StringsExplained#caseformat
+     */
+    @Test
+    public void caseFormatTest() throws Exception {
+        assertThat(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, "helloWorld"), is("hello-world"));
+    }
 
     @Test
     public void joinerTest() throws Exception {
