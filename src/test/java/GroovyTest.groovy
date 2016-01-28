@@ -7,6 +7,15 @@ import spock.lang.Specification
  */
 class GroovyTest extends Specification {
 
+    def "function test"() {
+        when:
+        def f = {a, b -> a + b}
+
+        then:
+        f(1, 2) == 3
+        f("a", 1) == "a1"
+    }
+
     def "dynamic method test"() {
         when:
         def methodMap = [
