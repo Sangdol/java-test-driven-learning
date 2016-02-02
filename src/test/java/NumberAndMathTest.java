@@ -10,6 +10,19 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class NumberAndMathTest {
+    
+    @Test
+    public void intAndDoubleDivisionTest() throws Exception {
+        int a = 1;
+        int b = 2;
+        double da = a;
+        double db = b;
+        
+        assertThat(a / b, is(0));
+        assertThat(da / b, is(0.5));
+        assertThat(a / db, is(0.5));
+        assertThat(da / db, is(0.5));
+    }
 
     @Test
     public void roundTest() throws Exception {
