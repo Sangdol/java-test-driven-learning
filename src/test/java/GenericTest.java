@@ -4,34 +4,13 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author hugh
  */
 public class GenericTest {
-
-    /**
-     * http://stackoverflow.com/questions/1092096/is-the-t-class-in-generic-classt-assignable-from-another-class
-     */
-    @Test
-    public void isAssignableFrom() throws Exception {
-        Class<Integer> intCls = Integer.class;
-        assertTrue(intCls.isAssignableFrom(Integer.class));
-        assertFalse(intCls.isAssignableFrom(Number.class));
-        assertFalse(intCls.isAssignableFrom(List.class));
-
-        Class<Number> numCls = Number.class;
-        assertTrue(numCls.isAssignableFrom(Integer.class));
-        assertTrue(numCls.isAssignableFrom(Number.class));
-        assertFalse(numCls.isAssignableFrom(Object.class));
-        assertFalse(numCls.isAssignableFrom(List.class));
-
-        Class<?> listCls = List.class;
-        assertTrue(listCls.isAssignableFrom(ArrayList.class));
-        assertTrue(listCls.isAssignableFrom(LinkedList.class));
-    }
 
     /**
      * Customer Extends, Consumer Super (from the point of view of the collection)

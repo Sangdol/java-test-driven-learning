@@ -1,6 +1,10 @@
 import lombok.AllArgsConstructor;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
@@ -8,6 +12,28 @@ import static org.hamcrest.Matchers.*;
  * @author hugh
  */
 public class ClassTest {
+
+    /**
+     * http://stackoverflow.com/questions/1092096/is-the-t-class-in-generic-classt-assignable-from-another-class
+     */
+    @Test
+    public void isAssignableFrom() throws Exception {
+        Class<Integer> intCls = Integer.class;
+        assertTrue(intCls.isAssignableFrom(Integer.class));
+        assertFalse(intCls.isAssignableFrom(Number.class));
+        assertFalse(intCls.isAssignableFrom(List.class));
+
+        Class<Number> numCls = Number.class;
+        assertTrue(numCls.isAssignableFrom(Integer.class));
+        assertTrue(numCls.isAssignableFrom(Number.class));
+        assertFalse(numCls.isAssignableFrom(Object.class));
+        assertFalse(numCls.isAssignableFrom(List.class));
+
+        Class<?> listCls = List.class;
+        assertTrue(listCls.isAssignableFrom(ArrayList.class));
+        assertTrue(listCls.isAssignableFrom(LinkedList.class));
+    }
+
     @Test
     public void classPathTest() throws Exception {
         String classPath = this.getClass().getClassLoader().getResource("").getPath();
