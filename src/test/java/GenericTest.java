@@ -161,7 +161,7 @@ public class GenericTest {
      * https://docs.oracle.com/javase/tutorial/java/generics/restrictions.html#createArrays
      */
     @SuppressWarnings("unused")
-    private void caanotCreateArrays() throws Exception {
+    private void cannotCreateArrays() throws Exception {
         // compile-error
         // List<Integer>[] arrayOfLists = new List<Integer>[2];
 
