@@ -34,7 +34,35 @@ public class CollectionTest {
         assertThat(set.contains(1), is(true));
         assertThat(set.contains(2), is(false));
     }
-    
+
+    @Test
+    public void mapSortTest() throws Exception {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(2, "two");
+        map.put(1, "one");
+        map.put(3, "three");
+
+        List<Map.Entry<Integer, String>> list = new ArrayList<>(map.entrySet());
+        Collections.sort(list, (e1, e2) -> e1.getKey().compareTo(e2.getKey()));
+        Collections.sort(list, Map.Entry.comparingByKey());
+
+        assertThat(list.get(0).getKey(), is(1));
+        assertThat(list.get(1).getKey(), is(2));
+        assertThat(list.get(2).getKey(), is(3));
+    }
+
+    @Test
+    public void mapEntrySetTest() throws Exception {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "one");
+
+        Set<Map.Entry<Integer, String>> set = map.entrySet();
+        Map.Entry<Integer, String> firstItem = set.iterator().next();
+        firstItem.setValue("1");
+        
+        assertThat(map.get(1), is("1"));
+    }
+
     @Test
     public void mapCreationTest() throws Exception {
         Map<Integer, String> map = Collections.singletonMap(1, "one");
