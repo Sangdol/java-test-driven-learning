@@ -12,6 +12,21 @@ import static org.hamcrest.Matchers.*;
  * @author hugh
  */
 public class StringTest {
+    
+    @Test
+    public void simpleMethodsTest() throws Exception {
+        assertThat("abc".length(), is(3));
+    }
+
+    @Test
+    public void charsTest() throws Exception {
+        char[] chars = "abc".toCharArray();
+        assertThat(chars[0], is('a'));
+        assertThat(chars[2], is('c'));
+
+        assertThat(new String(chars), is("abc"));
+        assertThat(String.valueOf(chars), is("abc"));
+    }
 
     /**
      * http://stackoverflow.com/a/943963/524588
