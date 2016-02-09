@@ -3,14 +3,27 @@ import org.junit.Test;
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
  * @author hugh
  */
 public class NumberAndMathTest {
-    
+
+    /**
+     * Actually it's not underflow
+     * https://www.reddit.com/r/programming/comments/3iq9mr/sometimes_a_bug_is_hit_only_after_code_was/
+     */
+    @Test
+    public void overflow() {
+        assertThat(-1 - Integer.MAX_VALUE, is(lessThan(0)));
+        assertThat(-1 - Integer.MIN_VALUE, is(greaterThan(0)));
+        assertThat(-2 - Integer.MIN_VALUE, is(-2 & Integer.MAX_VALUE));
+        assertThat(-1 - Integer.MIN_VALUE, is(Integer.MAX_VALUE));
+        assertThat(Integer.MAX_VALUE + 1, is(Integer.MIN_VALUE));
+    }
+
     @Test
     public void intAndDoubleDivisionTest() throws Exception {
         int a = 1;
