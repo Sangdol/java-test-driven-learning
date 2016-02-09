@@ -10,18 +10,32 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class NumberAndMathTest {
+    
+    @Test
+    public void castingTest() throws Exception {
+        assertThat((long)1.0, is(1L));
+        assertThat((long)1.1, is(1L));
+    }
 
     /**
      * Actually it's not underflow
      * https://www.reddit.com/r/programming/comments/3iq9mr/sometimes_a_bug_is_hit_only_after_code_was/
      */
     @Test
-    public void overflow() {
-        assertThat(-1 - Integer.MAX_VALUE, is(lessThan(0)));
-        assertThat(-1 - Integer.MIN_VALUE, is(greaterThan(0)));
-        assertThat(-2 - Integer.MIN_VALUE, is(-2 & Integer.MAX_VALUE));
+    public void overflowTest() {
+        assertThat(Integer.MAX_VALUE, is(2_147_483_647));
+        assertThat(Integer.MIN_VALUE, is(-2_147_483_648));
+
+        assertThat(Integer.MAX_VALUE, is(0b01111111_11111111_11111111_11111111));
+        assertThat(Integer.MIN_VALUE, is(0b10000000_00000000_00000000_00000000));
+
+        assertThat(-1 - Integer.MAX_VALUE, is(Integer.MIN_VALUE));
         assertThat(-1 - Integer.MIN_VALUE, is(Integer.MAX_VALUE));
+        assertThat(-2 - Integer.MIN_VALUE, is(-2 & Integer.MAX_VALUE));
         assertThat(Integer.MAX_VALUE + 1, is(Integer.MIN_VALUE));
+
+        assertThat((byte)(Byte.MAX_VALUE + 1), is(Byte.MIN_VALUE));
+        assertThat((short)(Short.MAX_VALUE + 1), is(Short.MIN_VALUE));
     }
 
     @Test
