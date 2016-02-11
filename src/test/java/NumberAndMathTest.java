@@ -10,6 +10,14 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class NumberAndMathTest {
+
+    @Test
+    public void decodeTest() throws Exception {
+        assertThat(Integer.decode("0xff"), is(255));
+        try {
+            Integer.decode("0b10");
+        } catch (NumberFormatException e) { }
+    }
     
     @Test
     public void castingTest() throws Exception {
