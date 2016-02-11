@@ -25,4 +25,9 @@ public class EnumTest {
     public void nameInConstructorTest() throws Exception {
         assertThat(Any.ABC.getValue(), is("ABC"));
     }
+
+    @Test
+    public void valueOfTest() throws Exception {
+        assertThat(Any.ABC.valueOf("ABC"), is(Any.ABC));
+    }
 }
