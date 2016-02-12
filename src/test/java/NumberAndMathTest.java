@@ -57,6 +57,7 @@ public class NumberAndMathTest {
         assertThat(da / b, is(0.5));
         assertThat(a / db, is(0.5));
         assertThat(da / db, is(0.5));
+        assertThat((double) a / b, is(0.5));
     }
 
     @Test
