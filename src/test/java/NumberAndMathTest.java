@@ -60,12 +60,43 @@ public class NumberAndMathTest {
         assertThat((double) a / b, is(0.5));
     }
 
+    /**
+     * Why does floor and ceil returns double instead of long?
+     *
+     * http://stackoverflow.com/questions/7287099/why-does-math-ceil-return-a-double
+     * http://stackoverflow.com/questions/511921/why-does-math-floor-return-a-double
+     * http://stackoverflow.com/questions/3412449/why-does-math-round-return-a-long-but-math-floor-return-a-double
+     *
+     * - For handling infinity and NAN
+     * - The range of double is greater than that of long.
+     * - There's double version of round - rint.
+     */
+    @Test
+    public void floorAndCeilAndRintTest() throws Exception {
+        assertThat(Math.floor(1.8), is(1.0));
+        assertThat(Math.ceil(1.8), is(2.0));
+        assertThat(Math.rint(1.8), is(2.0));
+
+        assertThat(Math.floor(-1.8), is(-2.0));
+        assertThat(Math.ceil(-1.8), is(-1.0));
+        assertThat(Math.rint(-1.8), is(-2.0));
+        assertThat(Math.rint(-1.5), is(-2.0));
+
+        assertThat(Math.floor(Double.NEGATIVE_INFINITY), is(Double.NEGATIVE_INFINITY));
+        assertThat(Math.floor(Double.NaN), is(Double.NaN));
+    }
+
     @Test
     public void roundTest() throws Exception {
         assertThat(Math.round(1.4), is(1L));
         assertThat(Math.round(1.5), is(2L));
         assertThat(Math.round(1.45), is(1L));
         assertThat(Math.round(-1.5), is(-1L));
+
+        assertThat((int) 1.5, is(1));
+        assertThat((int) -1.5, is(-1));
+        assertThat((long) 1.5, is(1L));
+        assertThat((long) -1.5, is(-1L));
     }
 
     @Test
