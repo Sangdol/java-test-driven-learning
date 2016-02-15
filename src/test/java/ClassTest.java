@@ -13,6 +13,15 @@ import static org.hamcrest.Matchers.*;
  */
 public class ClassTest {
 
+    @Test
+    public void instanceOfTest() throws Exception {
+        Integer i = 1;
+        Double d = 1.0;
+
+        assertTrue(i instanceof Number);
+        assertTrue(d instanceof Number);
+    }
+
     /**
      * http://stackoverflow.com/questions/1092096/is-the-t-class-in-generic-classt-assignable-from-another-class
      */
