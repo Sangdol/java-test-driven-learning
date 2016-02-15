@@ -52,6 +52,27 @@ public class CollectionTest {
     }
 
     @Test
+    public void sortTest() throws Exception {
+        List<Integer> list = Arrays.asList(2, 1, 3);
+        Collections.sort(list);
+        assertThat(list.get(0), is(1));
+        assertThat(list.get(2), is(3));
+
+        Collections.sort(list, Comparator.reverseOrder());
+        assertThat(list.get(0), is(3));
+        assertThat(list.get(2), is(1));
+
+        List<String> strList = Arrays.asList("1", "2", "11");
+        Collections.sort(strList);
+        assertThat(strList.get(0), is("1"));
+        assertThat(strList.get(2), is("2"));
+
+        Collections.sort(strList, Comparator.naturalOrder());
+        assertThat(strList.get(0), is("1"));
+        assertThat(strList.get(2), is("2"));
+    }
+
+    @Test
     public void mapEntrySetTest() throws Exception {
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "one");
