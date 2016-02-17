@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.*;
  */
 public class EnumTest {
     enum Any {
-        ABC;
+        ABC, A_B;
 
         private final String value;
 
@@ -24,6 +24,7 @@ public class EnumTest {
     @Test
     public void nameInConstructorTest() throws Exception {
         assertThat(Any.ABC.getValue(), is("ABC"));
+        assertThat(Any.A_B.getValue(), is("A_B"));
     }
 
     @Test
