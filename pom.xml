@@ -8,7 +8,8 @@
     <artifactId>learning-test</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <jackson.version>2.7.0</jackson.version>
+        <!--<jackson.version>2.6.3</jackson.version>-->
+        <jackson.version>2.7.1</jackson.version>
     </properties>
 
     <dependencies>
@@ -86,6 +87,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
+            <!--<artifactId>jackson-datatype-jdk8</artifactId>-->
+            <!--<version>${jackson.2.version}</version>-->
+        <!--</dependency>-->
 
     </dependencies>
     <build>
