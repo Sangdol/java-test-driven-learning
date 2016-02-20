@@ -14,6 +14,21 @@ import static org.hamcrest.Matchers.*;
 public class StringTest {
     
     @Test
+    public void charSequenceTest() throws Exception {
+        CharSequence cs = "str";
+        assertThat(cs.charAt(0), is('s'));
+
+        cs = new StringBuilder("str");
+        assertThat(cs.charAt(0), is('s'));
+
+        cs = new StringBuffer("str");
+        assertThat(cs.charAt(0), is('s'));
+        
+        assertThat(cs.length(), is(3));
+        assertThat(cs.toString(), is("str"));
+    }
+    
+    @Test
     public void simpleMethodsTest() throws Exception {
         assertThat("abc".length(), is(3));
     }
