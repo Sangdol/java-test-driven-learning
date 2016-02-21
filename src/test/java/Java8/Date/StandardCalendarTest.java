@@ -357,7 +357,8 @@ public class StandardCalendarTest {
 
         ZonedDateTime zonedDate = ZonedDateTime.of(date, UTC);
         
-        assertThat(zonedDate.toString(), is("2015-10-01T14:23Z"));
+        assertThat(zonedDate.toString(), is("2015-10-01T14:23Z[UTC]"));
+        assertThat(zonedDate + "", is("2015-10-01T14:23Z[UTC]"));
     }
 
     /**
