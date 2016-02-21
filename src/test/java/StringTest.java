@@ -12,6 +12,13 @@ import static org.hamcrest.Matchers.*;
  * @author hugh
  */
 public class StringTest {
+
+    @Test
+    public void replaceTest() throws Exception {
+        assertThat("abc1".replace("1", "2"), is("abc2")); // Literal
+        assertThat("abc11".replaceFirst("\\d", "2"), is("abc21")); // Regex
+        assertThat("abc11".replaceAll("\\d", "2"), is("abc22")); // Regex
+    }
     
     @Test
     public void charSequenceTest() throws Exception {
