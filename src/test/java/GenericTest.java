@@ -13,12 +13,13 @@ import static org.junit.Assert.assertThat;
 public class GenericTest {
 
     /**
-     * Customer Extends, Consumer Super (from the point of view of the collection)
+     * Producer Extends, Consumer Super (from the point of view of the collection)
      *
      * http://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java
      */
     @Test
     public void pecsTest() throws Exception {
+        // invariant (arrays covariant)
         List<? extends Number> numbers = Lists.newArrayList(1, 2, 3);
         assertThat(numbers.toString(), is("[1, 2, 3]"));
 
