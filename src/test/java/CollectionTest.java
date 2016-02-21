@@ -2,6 +2,7 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
@@ -13,6 +14,19 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class CollectionTest {
+
+    @Test
+    public void treeMapTest() throws Exception {
+        Map<Integer, String> treeMap = new TreeMap<>();
+        treeMap.put(3, "three");
+        treeMap.put(1, "one");
+        treeMap.put(2, "two");
+
+        List<Integer> list = treeMap.keySet().stream()
+                .collect(Collectors.toList());
+
+        assertThat(list, is(Arrays.asList(1, 2, 3)));
+    }
     
     @Test
     public void setIterationTest() throws Exception {
