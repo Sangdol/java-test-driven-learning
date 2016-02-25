@@ -605,6 +605,10 @@ public class StandardCalendarTest {
 
         LocalDateTime date = LocalDateTime.of(2015, 9, 25, 1, 2);
         assertThat(date.format(DateTimeFormatter.ISO_DATE_TIME), is("2015-09-25T01:02:00"));
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(date, UTC);
+        assertThat(zonedDateTime.format(DateTimeFormatter.ofPattern("a")), is("AM"));
+        assertThat(zonedDateTime.format(DateTimeFormatter.ofPattern("Z")), is("+0000"));
     }
 
     @Test
