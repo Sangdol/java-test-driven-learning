@@ -10,6 +10,20 @@ import static org.junit.Assert.assertThat;
  */
 public class ArrayTest {
 
+    /**
+     * http://stackoverflow.com/questions/8546500/why-isnt-there-a-java-lang-array-class-if-a-java-array-is-an-object-shouldnt
+     */
+    @Test
+    public void arrayClassTest() throws Exception {
+        Integer a = 1;
+        assertThat(a.getClass().toString(), is("class java.lang.Integer"));
+        assertThat(a.getClass().getSimpleName(), is("Integer"));
+
+        int[] arr = new int[10];
+        assertThat(arr.getClass().toString(), is("class [I"));
+        assertThat(arr.getClass().getSimpleName(), is("int[]"));
+    }
+
     @Test
     public void initializationTest() throws Exception {
         int[] arr = new int[10];
