@@ -34,9 +34,13 @@ public class StringTest {
         assertThat(cs.length(), is(3));
         assertThat(cs.toString(), is("str"));
     }
-    
+
+    /**
+     * Why length() is a method instead of a field?
+     * http://stackoverflow.com/questions/8720220/why-is-string-length-a-method
+     */
     @Test
-    public void simpleMethodsTest() throws Exception {
+    public void lengthTest() throws Exception {
         assertThat("abc".length(), is(3));
     }
 
