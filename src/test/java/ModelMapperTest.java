@@ -1,7 +1,5 @@
 import com.google.common.collect.Sets;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.AbstractConverter;
@@ -25,6 +23,7 @@ public class ModelMapperTest {
 
     @Setter
     @Getter
+    @NoArgsConstructor
     static class Person {
         @AllArgsConstructor
         static class Device {
@@ -37,12 +36,20 @@ public class ModelMapperTest {
             }
         }
 
-        Set<Device> devices;
+        private String name;
+        private Set<Device> devices;
+
+        public Person(String name) {
+            this.name = name;
+        }
     }
 
+    @Setter
     @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
     static class PersonDTO {
+        private String name;
         private String deviceName;
         private String deviceType;
     }
@@ -66,15 +73,22 @@ public class ModelMapperTest {
         mapper.addMappings(new PersonPropertyMap());
     }
 
-
     /**
      * http://modelmapper.org/user-manual/property-mapping/#converters
      */
     @Test
-    public void coverterTest() throws Exception {
-        PersonDTO dto = new PersonDTO("iPhone", "mobile");
+    public void converterSetTest() throws Exception {
+        PersonDTO dto = new PersonDTO("name", "iPhone", "mobile");
         Person person = mapper.map(dto, new TypeToken<Person>() {}.getType());
 
         assertThat(person.getDevices().iterator().next().toString(), is("iPhone mobile"));
+    }
+
+    @Test
+    public void converterTest() throws Exception {
+        Person person = new Person("abc");
+        PersonDTO dto = mapper.map(person, new TypeToken<PersonDTO>() {}.getType());
+
+        assertThat(dto.getName(), is("abc"));
     }
 }
