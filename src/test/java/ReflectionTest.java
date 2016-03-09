@@ -1,13 +1,19 @@
-import org.junit.Test;
+import common.Person;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
-import java.lang.reflect.Method;
+
+import java.lang.reflect.*;
 
 /**
  * @author hugh
  */
 public class ReflectionTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     /**
      * http://stackoverflow.com/questions/20192552/get-value-of-a-parameter-of-an-annotation-in-java
@@ -24,5 +30,16 @@ public class ReflectionTest {
         Method concat = String.class.getMethod("concat", String.class);
         String abcd = (String) concat.invoke("ab", "cd");
         assertThat(abcd, is("abcd"));
+    }
+
+    @Test
+    public void fieldTest() throws Exception {
+        Field age = Person.class.getDeclaredField("age");
+        
+        assertThat(age, is(notNullValue()));
+        assertThat(age.getName(), is("age"));
+
+        exception.expect(NoSuchFieldException.class);
+        Person.class.getDeclaredField("notExist");
     }
 }
