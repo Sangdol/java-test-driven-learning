@@ -1,11 +1,9 @@
-import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -14,6 +12,45 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class CollectionTest {
+
+    @Test
+    public void toStringTest() throws Exception {
+        List<Integer> intList = Arrays.asList(1, 2, 3);
+        assertThat(intList.toString(), is("[1, 2, 3]"));
+
+        List<String> strList = Arrays.asList("1", "2");
+        assertThat(strList.toString(), is("[1, 2]"));
+
+        strList = Arrays.asList("abc", "def");
+        assertThat(strList.toString(), is("[abc, def]"));
+    }
+    
+    /**
+     * http://stackoverflow.com/questions/5374311/convert-arrayliststring-to-string-array
+     */
+    @Test
+    public void toArrayTest() throws Exception {
+        List<Integer> list = Arrays.asList(1, 2, 3);
+        Integer[] arr = list.toArray(new Integer[list.size()]);
+        assertThat(arr[0], is(1));
+    }
+    
+    @Test
+    public void listRemoveTest() throws Exception {
+        List<Integer> list = new ArrayList<>();
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.add(0);
+        
+        list.remove(new Integer(0));
+        assertThat(list.contains(0), is(false));
+        assertThat(list.contains(3), is(true));
+        
+        list.remove(0);
+        assertThat(list.contains(3), is(false));
+        assertThat(list.get(0), is(2));
+    }
 
     @Test
     public void treeMapTest() throws Exception {
