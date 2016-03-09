@@ -344,4 +344,19 @@ public class LambdaAndStreamTest {
 
         assertThat(list.stream().max(Integer::compare).get(), is(20));
     }
+
+    /**
+     * http://stackoverflow.com/questions/23079003/how-to-convert-a-java-8-stream-to-an-array
+     * http://stackoverflow.com/questions/23007422/using-streams-with-primitives-data-types-and-corresponding-wrappers
+     */
+    @Test
+    public void toArrayTest() throws Exception {
+        Stream<Integer> stream = Stream.of(1, 2, 3);
+        Integer[] arr = stream.toArray(Integer[]::new);
+        assertThat(arr[0], is(1));
+
+        IntStream intStream = IntStream.of(4, 5, 6);
+        int[] intArr = intStream.toArray();
+        assertThat(intArr[0], is(4));
+    }
 }
