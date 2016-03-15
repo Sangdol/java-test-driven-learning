@@ -32,6 +32,18 @@ public class ReflectionTest {
         assertThat(abcd, is("abcd"));
     }
 
+    /**
+     * http://stackoverflow.com/questions/643906/uses-for-the-java-void-reference-type
+     * http://stackoverflow.com/questions/10839042/what-is-the-difference-between-java-lang-void-and-void
+     */
+    @Test
+    public void voidTypeTest() throws Exception {
+        Constructor<Void> constructor = Void.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        Void v = constructor.newInstance();
+        assertTrue(v instanceof Void);
+    }
+
     @Test
     public void fieldTest() throws Exception {
         Field age = Person.class.getDeclaredField("age");
