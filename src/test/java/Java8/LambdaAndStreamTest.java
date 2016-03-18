@@ -15,7 +15,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
@@ -168,6 +167,19 @@ public class LambdaAndStreamTest {
         
         assertThat(hobbies.size(), is(4));
         assertThat(hobbies.get(0), is("Piano"));
+
+        List<Set<Integer>> setList = new ArrayList<>();
+        Set<Integer> s0 = new HashSet<>(); s0.add(0);
+        Set<Integer> s1 = new HashSet<>(); s1.add(1);
+        setList.add(s0); setList.add(s1);
+
+        List<String> setFlatMapList = setList.stream()
+                .flatMap(Collection::stream)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        assertThat(setFlatMapList.get(0), is("0"));
+        assertThat(setFlatMapList.get(1), is("1"));
     }
 
     /**
