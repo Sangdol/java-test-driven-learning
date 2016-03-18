@@ -46,8 +46,11 @@ public class OptionalTest {
         assertThat(name.orElse("ddd"), is("abc"));
 
         name = Optional.ofNullable(null);
-        assertThat(name.get(), is(nullValue()));
         assertThat(name.orElse("ddd"), is("ddd"));
+        assertThat(name.orElseGet(() -> {
+            String abc = "abc";
+            return abc + abc;
+        }), is("abcabc"));
     }
 
     @Test(expected = NoSuchElementException.class)
