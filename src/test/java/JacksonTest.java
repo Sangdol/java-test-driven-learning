@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -91,23 +93,34 @@ public class JacksonTest {
     @Setter
     @Getter
     @AllArgsConstructor
-    public static class Naming {
+    public static class NoNoArgsConstructor {
         int ageAge;
     }
 
     /**
-     * Why is this not working with Jackson 2.7+?
-     * http://stackoverflow.com/questions/35471256/how-to-set-naming-strategy-to-objectmapper-on-jackson-2-7
+     * Naming strategy is not working if there's no @AllArgsConstructor in Jackson 2.7+
+     * - https://github.com/FasterXML/jackson-databind/issues/1122
+     *
+     * Naming strategy works weird, inconsistently when the class is inner static class.
      */
-    @Ignore
     @Test
-    public void namingStrategyTest() throws Exception {
-        Naming naming = new Naming(1);
+    public void namingStrategyBugTest() throws Exception {
+        NoNoArgsConstructor naming = new NoNoArgsConstructor(1);
         assertThat(mapper.writeValueAsString(naming), is("{\"ageAge\":1}"));
 
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        assertThat(mapper.writeValueAsString(naming), is("{\"age_age\":1}"));
-        assertThat(mapper.readValue("{\"ageAge\":1}", Naming.class).getAgeAge(), is(1));
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        assertThat(mapper.writeValueAsString(naming), is("{\"ageAge\":1}"));
+//        assertThat(mapper.readValue("{\"ageAge\":1}", NoNoArgsConstructor.class).getAgeAge(), is(1));
+
+    }
+
+    @Test
+    public void namingStrategyMapTest() throws Exception {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("camelCase", 1);
+        
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        assertThat(mapper.writeValueAsString(map), is("{\"camelCase\":1}"));
     }
 
     @Test

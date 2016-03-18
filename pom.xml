@@ -8,8 +8,7 @@
     <artifactId>learning-test</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <!--<jackson.version>2.6.3</jackson.version>-->
-        <jackson.version>2.7.1</jackson.version>
+        <jackson.version>2.6.4</jackson.version>
     </properties>
 
     <dependencies>
