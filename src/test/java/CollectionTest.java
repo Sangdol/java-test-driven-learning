@@ -64,6 +64,29 @@ public class CollectionTest {
 
         assertThat(list, is(Arrays.asList(1, 2, 3)));
     }
+
+    /**
+     * http://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
+     */
+    @Test
+    public void setSortingTest() throws Exception {
+        Set<String> set = new HashSet<>();
+        set.add("1");
+        set.add("2");
+        set.add("11");
+
+        TreeSet<String> treeSet = new TreeSet<>(set);
+        Iterator<String> treeSetIt = treeSet.iterator();
+        assertThat(treeSetIt.next(), is("1"));
+        assertThat(treeSetIt.next(), is("11"));
+        assertThat(treeSetIt.next(), is("2"));
+
+        List<String> list = new ArrayList<>(set);
+        Collections.sort(list);
+        assertThat(list.get(0), is("1"));
+        assertThat(list.get(1), is("11"));
+        assertThat(list.get(2), is("2"));
+    }
     
     @Test
     public void setIterationTest() throws Exception {
