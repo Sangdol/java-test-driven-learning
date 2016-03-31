@@ -45,6 +45,13 @@ public class NumberAndMathTest {
         assertThat((byte)(Byte.MAX_VALUE + 1), is(Byte.MIN_VALUE));
         assertThat((short)(Short.MAX_VALUE + 1), is(Short.MIN_VALUE));
     }
+    
+    @Test
+    public void doubleRangeTest() throws Exception {
+        assertThat(1.0 / 3, is(0.3333333333333333));
+        assertThat(1.0 / 7, is(0.14285714285714285));
+        assertThat(100000.0 / 7, is(14285.714285714286));
+    }
 
     @Test
     public void intAndDoubleDivisionTest() throws Exception {
