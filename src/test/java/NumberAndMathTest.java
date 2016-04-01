@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import java.math.BigInteger;
+import java.math.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.Matchers.*;
@@ -100,10 +100,37 @@ public class NumberAndMathTest {
         assertThat(Math.round(1.45), is(1L));
         assertThat(Math.round(-1.5), is(-1L));
 
+        assertThat(round(1.11555, 3), is(1.116));
+        assertThat(round(0.1, 18), is(0.1));
+        assertThat(round(0.1, 19), is(0.1));
+        assertThat(round(0.1, 20), is(0.09223372036854775));
+
+        assertThat(round2(1.11555, 3), is(1.116));
+        assertThat(round2(0.1, 18), is(0.1));
+        assertThat(round2(0.1, 19), is(0.1));
+        assertThat(round2(0.1, 20), is(0.1));
+
         assertThat((int) 1.5, is(1));
         assertThat((int) -1.5, is(-1));
         assertThat((long) 1.5, is(1L));
         assertThat((long) -1.5, is(-1L));
+    }
+
+    /**
+     * Super accurate but a bit slow
+     * http://stackoverflow.com/a/154354/524588
+     */
+    private double round2(double n, int scale) {
+        return new BigDecimal(String.valueOf(n)).setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    /**
+     * Not super accurate but fast
+     * http://stackoverflow.com/a/153753/524588
+     */
+    private double round(double n, int scale) {
+        double multiplier = Math.pow(10, scale);
+        return Math.round(n * multiplier) / multiplier;
     }
 
     @Test
