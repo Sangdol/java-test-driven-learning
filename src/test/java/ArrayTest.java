@@ -10,6 +10,14 @@ import static org.junit.Assert.assertThat;
  */
 public class ArrayTest {
 
+    @Test
+    public void fillTest() throws Exception {
+        int[] arr = new int[2];
+        Arrays.fill(arr, 1);
+        assertThat(arr[0], is(1));
+        assertThat(arr[1], is(1));
+    }
+
     /**
      * http://stackoverflow.com/questions/8546500/why-isnt-there-a-java-lang-array-class-if-a-java-array-is-an-object-shouldnt
      */
