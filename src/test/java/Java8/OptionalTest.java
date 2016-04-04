@@ -2,7 +2,8 @@ package Java8;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -19,6 +20,9 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class OptionalTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test(expected = NullPointerException.class)
     public void ofExceptionTest() throws Exception {
@@ -66,11 +70,15 @@ public class OptionalTest {
         name.ifPresent(System.out::println);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void orElseThrowTest() throws Exception {
         Optional<String> name = Optional.ofNullable(null);
 
+        exception.expect(IllegalStateException.class);
         name.orElseThrow(IllegalStateException::new);
+
+        exception.expect(IllegalStateException.class);
+        name.orElseThrow(() -> new IllegalStateException("msg"));
     }
 
     @Test(expected = IllegalStateException.class)
