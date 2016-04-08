@@ -18,6 +18,19 @@ import static org.hamcrest.Matchers.*;
 public class GuavaTest {
 
     /**
+     * http://stackoverflow.com/questions/12026885/common-util-to-break-a-list-into-batch
+     */
+    @Test
+    public void partitionTest() throws Exception {
+        List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5);
+        List<List<Integer>> intsList = Lists.partition(ints, 2);
+
+        assertThat(intsList.get(0), is(Arrays.asList(1, 2)));
+        assertThat(intsList.get(1), is(Arrays.asList(3, 4)));
+        assertThat(intsList.get(2), is(Arrays.asList(5)));
+    }
+
+    /**
      * https://github.com/google/guava/wiki/StringsExplained#caseformat
      */
     @Test
