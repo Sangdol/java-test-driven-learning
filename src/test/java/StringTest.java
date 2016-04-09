@@ -13,6 +13,14 @@ import static org.hamcrest.Matchers.*;
  */
 public class StringTest {
 
+    /**
+     * http://stackoverflow.com/questions/7569335/reverse-a-string-in-java
+     */
+    @Test
+    public void reverseTest() throws Exception {
+        assertThat(new StringBuilder("abc").reverse().toString(), is("cba"));
+    }
+
     @Test
     public void replaceTest() throws Exception {
         assertThat("abc1".replace("1", "2"), is("abc2")); // Literal
