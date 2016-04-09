@@ -46,12 +46,13 @@ public class StringTest {
 
     @Test
     public void charsTest() throws Exception {
-        char[] chars = "abc".toCharArray();
+        char[] chars = "abc0".toCharArray();
         assertThat(chars[0], is('a'));
         assertThat(chars[2], is('c'));
+        assertThat(chars[3] - '0', is(0));
 
-        assertThat(new String(chars), is("abc"));
-        assertThat(String.valueOf(chars), is("abc"));
+        assertThat(new String(chars), is("abc0"));
+        assertThat(String.valueOf(chars), is("abc0"));
     }
 
     /**
