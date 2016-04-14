@@ -33,6 +33,10 @@ public class CollectionTest {
         List<Integer> list = Arrays.asList(1, 2, 3);
         Integer[] arr = list.toArray(new Integer[list.size()]);
         assertThat(arr[0], is(1));
+
+        // http://stackoverflow.com/questions/23079003/how-to-convert-a-java-8-stream-to-an-array
+        arr = list.stream().toArray(Integer[]::new);
+        assertThat(arr[0], is(1));
     }
     
     @Test
