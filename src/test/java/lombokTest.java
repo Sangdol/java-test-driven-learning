@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.*;
  *
  * @author hugh
  */
-public class lombokTest {
+public class LombokTest {
 
     @Builder
     static class Person {

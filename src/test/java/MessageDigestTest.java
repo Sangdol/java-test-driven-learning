@@ -18,7 +18,7 @@ public class MessageDigestTest {
      * MessageDigest is not thread-safe.
      */
     @Test
-    public void genrateMd5Test() throws Exception {
+    public void generateMd5Test() throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] source = "source".getBytes("UTF-8");
         byte[] target = md.digest(source);
