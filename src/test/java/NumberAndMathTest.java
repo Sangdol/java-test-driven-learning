@@ -1,15 +1,33 @@
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import java.math.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author hugh
  */
 public class NumberAndMathTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void intifityTest() throws Exception {
+        double infinite = 1.0 / 0.0;
+        assertTrue(Double.isInfinite(infinite));
+        assertThat(10 / infinite, is(0.0));
+    }
+
+    @Test
+    public void divideByZeroTest() throws Exception {
+        exception.expect(ArithmeticException.class);
+        int a = 1 / 0;
+    }
 
     @Test
     public void decodeTest() throws Exception {
