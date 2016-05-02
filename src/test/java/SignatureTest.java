@@ -1,9 +1,8 @@
 import org.junit.Test;
-import sun.security.rsa.RSASignature;
 
+import javax.xml.bind.DatatypeConverter;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.spec.*;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -28,14 +27,43 @@ public class SignatureTest {
         PrivateKey privateKey = keyPair.getPrivate();
         PublicKey publicKey = keyPair.getPublic();
 
-        byte[] realSig = getOrigSig(privateKey);
+        // Can be assumed as a server that has a private key.
+        byte[] originalSignature = generateOriginalSignature(privateKey);
+
+        // Can be assumed as a client that has a public key.
         PublicKey decodedPublicKey = encodeAndDecodePublicKey(publicKey);
         Signature sig = generateVerifyingSig(decodedPublicKey);
 
         assertTrue(Arrays.equals(publicKey.getEncoded(), decodedPublicKey.getEncoded()));
 
-        boolean verifies = sig.verify(realSig);
+        boolean verifies = sig.verify(originalSignature);
         assertTrue(verifies);
+    }
+
+    /**
+     * http://stackoverflow.com/questions/19353748/how-to-convert-byte-array-to-privatekey-or-publickey-type
+     */
+    @Test
+    public void stringKeysTest() throws Exception {
+        KeyPair keyPair = generateKeyPair();
+        PrivateKey originalPrivateKey = keyPair.getPrivate();
+        PublicKey originalPublicKey = keyPair.getPublic();
+
+        Base64.Decoder decoder = Base64.getDecoder();
+        Base64.Encoder encoder = Base64.getEncoder();
+        String privateKey = encoder.encodeToString(originalPrivateKey.getEncoded());
+        String publicKey = encoder.encodeToString(originalPublicKey.getEncoded());
+        System.out.println("privateKey: " + privateKey);
+        System.out.println("publicKey: " + publicKey);
+
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        byte[] prBytes = decoder.decode(privateKey);
+        byte[] pubBytes = decoder.decode(publicKey);
+        PKCS8EncodedKeySpec prSpec = new PKCS8EncodedKeySpec(prBytes);
+        X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubBytes);
+
+        assertThat(keyFactory.generatePrivate(prSpec), is(originalPrivateKey));
+        assertThat(keyFactory.generatePublic(pubSpec), is(originalPublicKey));
     }
 
     /**
@@ -53,7 +81,7 @@ public class SignatureTest {
     /**
      * https://docs.oracle.com/javase/tutorial/security/apisign/step3.html
      */
-    private byte[] getOrigSig(PrivateKey privateKey) throws NoSuchAlgorithmException, NoSuchProviderException,
+    private byte[] generateOriginalSignature(PrivateKey privateKey) throws NoSuchAlgorithmException, NoSuchProviderException,
             InvalidKeyException, SignatureException {
 
         // SHA1 - message digest algorithm
