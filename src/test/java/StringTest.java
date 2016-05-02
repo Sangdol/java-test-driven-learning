@@ -1,6 +1,7 @@
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -67,14 +68,28 @@ public class StringTest {
      * http://stackoverflow.com/a/943963/524588
      */
     @Test
-    public void bytesToHexString() throws Exception {
+    public void bytesToHexStringTest() throws Exception {
         byte[] bytes = new byte[] {1, 2};
         BigInteger bi = new BigInteger(1, bytes);
 
+        assertThat(String.format("%0" + (bytes.length << 1) + "X", bi), is("0102"));
+
+        // explanation tests
         assertThat(bi, is(BigInteger.valueOf(258)));
         assertThat(bytes.length << 1, is(4));
         assertThat("%0" + (bytes.length << 1) + "X", is("%04X"));
-        assertThat(String.format("%0" + (bytes.length << 1) + "X", bi), is("0102"));
+    }
+
+    /**
+     * http://stackoverflow.com/a/14552724/524588
+     * http://stackoverflow.com/a/5942951/524588
+     */
+    @Test
+    public void bytesToHexAndReverseTest() throws Exception {
+        byte[] bytes = {(byte)0, (byte)0, (byte)134, (byte)1, (byte)61};
+        String hex = "000086013D";
+        assertThat(DatatypeConverter.printHexBinary(bytes), is(hex));
+        assertThat(DatatypeConverter.parseHexBinary(hex), is(bytes));
     }
 
     @Test
