@@ -3,8 +3,7 @@ import org.junit.Test;
 
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -62,6 +61,18 @@ public class StringTest {
 
         assertThat(new String(chars), is("abc0"));
         assertThat(String.valueOf(chars), is("abc0"));
+    }
+
+    @Test
+    public void base64Test() throws Exception {
+        byte[] bytes = new byte[] {1, 2, 3, 4, 100};
+
+        Base64.Encoder encoder = Base64.getEncoder();
+        String encoded = "AQIDBGQ=";
+        assertThat(encoder.encodeToString(bytes), is(encoded));
+
+        Base64.Decoder decoder = Base64.getDecoder();
+        assertThat(decoder.decode(encoded), is(bytes));
     }
 
     /**
