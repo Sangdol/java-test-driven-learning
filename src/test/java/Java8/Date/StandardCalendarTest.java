@@ -8,8 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.*;
 import java.util.*;
 
 import static org.hamcrest.core.Is.is;
@@ -48,10 +47,10 @@ public class StandardCalendarTest {
         assertThat(utcDate.toString(), is("2015-11-11T01:01Z[UTC]"));
         assertThat(zuluDate.toString(), is("2015-11-11T01:01Z"));
 
-        assertThat(utc.normalized().toString(), is("UTC"));
-        assertThat(zulu.normalized().toString(), is("UTC"));
+        assertThat(utc.normalized().toString(), is("Z"));
+        assertThat(zulu.normalized().toString(), is("Z"));
 
-        assertThat(ZonedDateTime.of(ldt, zulu.normalized()), is("2015-11-11T01:01Z[UTC]"));
+        assertThat(ZonedDateTime.of(ldt, zulu.normalized()).toString(), is("2015-11-11T01:01Z"));
     }
 
     /**
@@ -210,7 +209,7 @@ public class StandardCalendarTest {
         ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.of(2015, 11, 15, 0, 0), UTC);
 
         assertThat(zdt.withZoneSameLocal(PST).toString(), is("2015-11-15T00:00-08:00[America/Los_Angeles]"));
-        assertThat(zdt.withZoneSameInstant(PST).toString(), is("2015-11-15T16:00-08:00[America/Los_Angeles]"));
+        assertThat(zdt.withZoneSameInstant(PST).toString(), is("2015-11-14T16:00-08:00[America/Los_Angeles]"));
     }
 
     /**
@@ -249,7 +248,7 @@ public class StandardCalendarTest {
 
         zone = ZoneId.of("Asia/Seoul");
         zonedDateTime = ZonedDateTime.of(date, zone);
-        assertThat(Date.from(zonedDateTime.toInstant()).toString(), is("Sat Oct 09 15:00:00 UTC 2015"));
+        assertThat(Date.from(zonedDateTime.toInstant()).toString(), is("Fri Oct 09 15:00:00 UTC 2015"));
     }
 
     @Test
@@ -324,7 +323,7 @@ public class StandardCalendarTest {
         assertThat(zonedDate.format(iso), is("2015-09-30T00:00:00-07:00[America/Los_Angeles]"));
 
         zonedDate = zonedDate.withZoneSameInstant(UTC);
-        assertThat(zonedDate.format(iso), is("2015-09-30T07:00:00Z"));
+        assertThat(zonedDate.format(iso), is("2015-09-30T07:00:00Z[UTC]"));
     }
 
     @Test
@@ -333,7 +332,7 @@ public class StandardCalendarTest {
         LocalDateTime date = LocalDateTime.of(2015, 9, 30, 0, 0);
         ZonedDateTime zonedDate = ZonedDateTime.of(date, UTC);
 
-        assertThat(zonedDate.format(iso), is("2015-09-30T00:00:00Z"));
+        assertThat(zonedDate.format(iso), is("2015-09-30T00:00:00Z[UTC]"));
 
         zonedDate = zonedDate.withZoneSameInstant(PST);
         assertThat(zonedDate.format(iso), is("2015-09-29T17:00:00-07:00[America/Los_Angeles]"));
@@ -437,9 +436,6 @@ public class StandardCalendarTest {
 
         localDate = LocalDate.parse("2015-09-25", DateTimeFormatter.ISO_LOCAL_DATE);
         assertThat(localDate.toString(), is("2015-09-25"));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        formatter.parse("2015-10-01", LocalDateTime::from);
     }
 
     @Test
@@ -508,7 +504,7 @@ public class StandardCalendarTest {
         parsed = ZonedDateTime.parse("2015-11-10T10:52:00+01:00",
                 DateTimeFormatter.ISO_ZONED_DATE_TIME.withZone(UTC));
 
-        assertThat(parsed.toString(), is("2015-11-10T10:52Z"));
+        assertThat(parsed.toString(), is("2015-11-10T10:52Z[UTC]"));
     }
 
     @Test
@@ -528,12 +524,12 @@ public class StandardCalendarTest {
                 .toFormatter()
                 .withZone(UTC);
 
-        assertThat(ZonedDateTime.parse("2015-9", formatter).toString(), is("2015-09-01T00:00Z"));
+        assertThat(ZonedDateTime.parse("2015-9", formatter).toString(), is("2015-09-01T00:00Z[UTC]"));
         assertThat(ZonedDateTime.parse("2015-9 PST", formatter).toString(), is("2015-09-01T00:00-07:00[America/Los_Angeles]"));
-        assertThat(ZonedDateTime.parse("2015-09 10:10", formatter).toString(), is("2015-09-01T10:10Z"));
-        assertThat(ZonedDateTime.parse("2015-09-05", formatter).toString(), is("2015-09-05T00:00Z"));
-        assertThat(ZonedDateTime.parse("2015-10-01", formatter).toString(), is("2015-10-01T00:00Z"));
-        assertThat(ZonedDateTime.parse("2015-1-1 10:10", formatter).toString(), is("2015-01-01T10:10Z"));
+        assertThat(ZonedDateTime.parse("2015-09 10:10", formatter).toString(), is("2015-09-01T10:10Z[UTC]"));
+        assertThat(ZonedDateTime.parse("2015-09-05", formatter).toString(), is("2015-09-05T00:00Z[UTC]"));
+        assertThat(ZonedDateTime.parse("2015-10-01", formatter).toString(), is("2015-10-01T00:00Z[UTC]"));
+        assertThat(ZonedDateTime.parse("2015-1-1 10:10", formatter).toString(), is("2015-01-01T10:10Z[UTC]"));
         assertThat(ZonedDateTime.parse("2015-1-1 10:10 KST", formatter).toString(), is("2015-01-01T10:10+09:00[Asia/Seoul]"));
 
         assertThat(LocalDateTime.parse("2015-1-1 10:10", formatter).toString(), is("2015-01-01T10:10"));
@@ -615,7 +611,7 @@ public class StandardCalendarTest {
         assertThat(zonedDateTime.format(DateTimeFormatter.ofPattern("Z")), is("+0000"));
     }
 
-    @Test
+    @Test(expected = UnsupportedTemporalTypeException.class)
     public void forammtingExceptionTest() throws Exception {
         LocalDateTime date = LocalDateTime.now();
         date.format(DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z"));
