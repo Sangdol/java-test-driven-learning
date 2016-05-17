@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import static java.time.temporal.ChronoField.*;
@@ -368,13 +369,16 @@ public class StandardCalendarTest {
      */
     @Test
     public void offsetDateTimeTest() throws Exception {
-        LocalDateTime localDate = LocalDateTime.of(2015, 9, 25, 11, 33);
+        LocalDateTime localDateTime = LocalDateTime.of(2015, 9, 25, 11, 33);
         ZoneOffset offset = ZoneOffset.of("+09:00");
 
-        OffsetDateTime offsetDate = OffsetDateTime.of(localDate, offset);
-        OffsetDateTime lastThursday = offsetDate.with(TemporalAdjusters.lastInMonth(DayOfWeek.THURSDAY));
+        OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, offset);
+        OffsetDateTime lastThursday = offsetDateTime.with(TemporalAdjusters.lastInMonth(DayOfWeek.THURSDAY));
 
         assertThat(lastThursday.getDayOfMonth(), is(24));
+
+        offsetDateTime = localDateTime.atOffset(ZoneOffset.ofHours(9));
+        assertThat(offsetDateTime.toZonedDateTime().getZone(), is(ZoneId.of("+09:00")));
     }
 
     /**
