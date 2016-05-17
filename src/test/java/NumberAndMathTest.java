@@ -4,7 +4,7 @@ import org.junit.rules.ExpectedException;
 import java.math.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +17,13 @@ public class NumberAndMathTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void intifityTest() throws Exception {
+    public void moduloTest() throws Exception {
+        assertThat(-3 % 10, is(-3));
+        assertThat(-11 % 10, is(-1));
+    }
+
+    @Test
+    public void infinityTest() throws Exception {
         double infinite = 1.0 / 0.0;
         assertTrue(Double.isInfinite(infinite));
         assertThat(10 / infinite, is(0.0));
