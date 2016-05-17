@@ -436,6 +436,14 @@ public class StandardCalendarTest {
 
         localDate = LocalDate.parse("2015-09-25", DateTimeFormatter.ISO_LOCAL_DATE);
         assertThat(localDate.toString(), is("2015-09-25"));
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2016-05-17T18:24:42",
+                DateTimeFormatter.ISO_DATE_TIME.withZone(UTC));
+        assertThat(zonedDateTime.toString(), is("2016-05-17T18:24:42Z[UTC]"));
+
+        zonedDateTime = ZonedDateTime.parse("2016-05-17T18:24:42",
+                DateTimeFormatter.ISO_DATE_TIME.withZone(PST));
+        assertThat(zonedDateTime.toString(), is("2016-05-17T18:24:42-07:00[America/Los_Angeles]"));
     }
 
     @Test
@@ -605,6 +613,11 @@ public class StandardCalendarTest {
 
         LocalDateTime date = LocalDateTime.of(2015, 9, 25, 1, 2);
         assertThat(date.format(DateTimeFormatter.ISO_DATE_TIME), is("2015-09-25T01:02:00"));
+        assertThat(date.format(DateTimeFormatter.ofPattern("HH:mm")), is("01:02"));
+
+        // withZone() is meaningless when formatting
+        assertThat(date.format(DateTimeFormatter.ofPattern("HH:mm").withZone(UTC)), is("01:02"));
+        assertThat(date.format(DateTimeFormatter.ofPattern("HH:mm").withZone(PST)), is("01:02"));
 
         ZonedDateTime zonedDateTime = ZonedDateTime.of(date, UTC);
         assertThat(zonedDateTime.format(DateTimeFormatter.ofPattern("a")), is("AM"));
