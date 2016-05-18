@@ -400,7 +400,14 @@ public class StandardCalendarTest {
         assertThat(offsetTime1.withOffsetSameInstant(ZoneOffset.of("Z")).getHour(), is(10));
         assertThat(offsetTime2.withOffsetSameInstant(ZoneOffset.of("Z")).getHour(), is(17));
 
+        assertThat(offsetTime1.toLocalTime().getHour(), is(2));
+        assertThat(offsetTime2.toLocalTime().getHour(), is(2));
+
         assertTrue(offsetTime1.isAfter(offsetTime2));
+
+        OffsetDateTime odt = OffsetDateTime.of(2016, 5, 18, 2, 50, 0, 0, ZoneOffset.UTC);
+        assertThat(odt.withOffsetSameInstant(offset1).getHour(), is(18));
+        assertThat(odt.withOffsetSameInstant(offset2).getHour(), is(11));
     }
 
     /**
