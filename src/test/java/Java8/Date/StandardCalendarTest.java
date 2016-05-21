@@ -79,6 +79,15 @@ public class StandardCalendarTest {
         assertThat(ChronoUnit.SECONDS.between(start, end),
                 is(start.until(end, ChronoUnit.SECONDS)));
     }
+
+    @Test
+    public void diffWithDiffTypeTest() throws Exception {
+        LocalDateTime local = LocalDateTime.of(2015, 1, 10, 10, 10);
+        ZonedDateTime zoned = ZonedDateTime.of(local, UTC);
+
+        assertThat(local.until(zoned, ChronoUnit.SECONDS), is(0L));
+        assertThat(ChronoUnit.SECONDS.between(local, zoned), is(0L));
+    }
     
     @Test
     public void comparisonTest() throws Exception {
