@@ -29,6 +29,7 @@ public class BinaryTest {
         assertThat((1L << 1), is((long)Math.pow(2, 1)));
         assertThat((1L << 31), is((long)Math.pow(2, 31)));
 
+        assertThat(bits(Integer.MAX_VALUE), is("01111111_11111111_11111111_11111111"));
         assertThat(Integer.MAX_VALUE, is((int)((1L << 31) - 1)));
         assertThat(bits(Integer.MIN_VALUE), is("10000000_00000000_00000000_00000000"));
         assertThat(bits(Integer.MIN_VALUE >> 1), is("11000000_00000000_00000000_00000000"));
