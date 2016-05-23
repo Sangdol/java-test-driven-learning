@@ -1,11 +1,10 @@
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 
 /**
  * Regex Tutorials
