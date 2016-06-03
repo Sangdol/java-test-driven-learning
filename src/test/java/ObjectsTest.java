@@ -2,6 +2,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.junit.Test;
 
+import java.util.*;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertFalse;
@@ -12,6 +14,26 @@ import static org.junit.Assert.assertTrue;
  * @author hugh
  */
 public class ObjectsTest {
+
+    @Test
+    public void hashCodeTest() throws Exception {
+        Integer a = 1;
+        assertThat(a.hashCode(), is(1));
+
+        Long two = 2L;
+        assertThat(two.hashCode(), is(2));
+
+        assertThat(2L << 32, is(8589934592L));
+        Long twoToThe32 = 8589934592L;
+        assertThat(twoToThe32.hashCode(), is(2));
+
+        Map<Long, String> map  = new HashMap<>();
+        map.put(two, "two");
+        map.put(twoToThe32, "two to the thirty two");
+
+        assertThat(map.get(two), is("two"));
+        assertThat(map.get(twoToThe32), is("two to the thirty two"));
+    }
 
     @NoArgsConstructor
     @AllArgsConstructor
