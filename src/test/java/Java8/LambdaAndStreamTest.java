@@ -324,6 +324,16 @@ public class LambdaAndStreamTest {
                 .collect(Collectors.groupingBy(p -> p.gender, Collectors.reducing(0, p -> p.age, Integer::sum)));
 
         assertThat(totalAgeByGender.size(), is(2));
+
+        List<String> list = Arrays.asList("c 1", "a 1", "b 2", "b 1", "a 10");
+        Map<String, List<String>> byFirstAndSort = list.stream()
+                .sorted()
+                .collect(Collectors.groupingBy(s -> s.substring(0, 1)));
+
+        Iterator<Map.Entry<String, List<String>>> iterator = byFirstAndSort.entrySet().iterator();
+        assertThat(iterator.next().getKey(), is("a"));
+        assertThat(iterator.next().getKey(), is("b"));
+        assertThat(iterator.next().getKey(), is("c"));
     }
 
     @Test
