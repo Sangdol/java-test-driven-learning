@@ -626,6 +626,7 @@ public class StandardCalendarTest {
 
         // throws DateTimeException
         assertThat(localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")), is("Sep 25 2015"));
+        assertThat(localDate.format(DateTimeFormatter.ofPattern("MMMM d yyyy")), is("September 25 2015"));
 
         LocalDateTime date = LocalDateTime.of(2015, 9, 25, 1, 2);
         assertThat(date.format(DateTimeFormatter.ISO_DATE_TIME), is("2015-09-25T01:02:00"));
