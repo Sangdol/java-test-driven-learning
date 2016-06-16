@@ -10,9 +10,8 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -380,5 +379,15 @@ public class LambdaAndStreamTest {
         IntStream intStream = IntStream.of(4, 5, 6);
         int[] intArr = intStream.toArray();
         assertThat(intArr[0], is(4));
+    }
+    
+    @Test
+    public void peekTest() throws Exception {
+        AtomicInteger aiSum = new AtomicInteger(0);
+        int sum = Stream.of(1, 2, 3)
+                .peek(aiSum::addAndGet)
+                .mapToInt(i -> i).sum();
+
+        assertThat(aiSum.get(), is(sum));
     }
 }
