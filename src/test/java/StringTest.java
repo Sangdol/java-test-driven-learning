@@ -12,6 +12,11 @@ import static org.hamcrest.Matchers.*;
  * @author hugh
  */
 public class StringTest {
+    
+    @Test
+    public void trimTest() throws Exception {
+        assertThat(" abc ".trim(), is("abc"));
+    }
 
     /**
      * http://stackoverflow.com/questions/7569335/reverse-a-string-in-java
