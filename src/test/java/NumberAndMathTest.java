@@ -4,9 +4,9 @@ import org.junit.rules.ExpectedException;
 import java.math.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author hugh
@@ -25,7 +25,7 @@ public class NumberAndMathTest {
     @Test
     public void infinityTest() throws Exception {
         double infinite = 1.0 / 0.0;
-        assertTrue(Double.isInfinite(infinite));
+        assertThat(Double.isInfinite(infinite), is(true));
         assertThat(10 / infinite, is(0.0));
     }
 
@@ -40,6 +40,7 @@ public class NumberAndMathTest {
         assertThat(Integer.decode("0xff"), is(255));
         try {
             Integer.decode("0b10");
+            fail();
         } catch (NumberFormatException e) { }
     }
     
