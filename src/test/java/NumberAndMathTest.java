@@ -17,6 +17,21 @@ public class NumberAndMathTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
+    public void valueOfNumberFormatExceptionTest() throws Exception {
+        assertThat(Integer.valueOf("1"), is(1));
+
+        try {
+            assertThat(Integer.valueOf("1 "), is(1));
+            fail();
+        } catch (NumberFormatException e) {}
+
+        try {
+            assertThat(Integer.valueOf(null), is(1));
+            fail();
+        } catch (NumberFormatException e) {}
+    }
+
+    @Test
     public void moduloTest() throws Exception {
         assertThat(-3 % 10, is(-3));
         assertThat(-11 % 10, is(-1));
