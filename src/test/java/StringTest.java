@@ -12,6 +12,44 @@ import static org.hamcrest.Matchers.*;
  * @author hugh
  */
 public class StringTest {
+
+    /**
+     * http://stackoverflow.com/questions/11700320/is-string-literal-pool-a-collection-of-references-to-the-string-object-or-a-col/11701016#11701016
+     */
+    @Test
+    public void stringLiteralPoolTest() throws Exception {
+        String a = "a";
+        String b = "a";
+
+        // Same literal
+        assertThat(a.equals(b), is(true));
+        assertThat(a.hashCode() == b.hashCode(), is(true));
+        assertThat(System.identityHashCode(a) == System.identityHashCode(b), is(true));
+
+        a = "a";
+        b = new String("a");
+
+        // Same literal
+        assertThat(a.equals(b), is(true));
+        assertThat(a.hashCode() == b.hashCode(), is(true));
+        assertThat(System.identityHashCode(a) == System.identityHashCode(b), is(false));
+
+        a = "a";
+        b = "?a".substring(1);
+
+        // Different literal
+        assertThat(a.equals(b), is(true));
+        assertThat(a.hashCode() == b.hashCode(), is(true));
+        assertThat(System.identityHashCode(a) == System.identityHashCode(b), is(false));
+
+        a = "a";
+        b = "?a".substring(1).intern();
+
+        // Same literal
+        assertThat(a.equals(b), is(true));
+        assertThat(a.hashCode() == b.hashCode(), is(true));
+        assertThat(System.identityHashCode(a) == System.identityHashCode(b), is(true));
+    }
     
     @Test
     public void trimTest() throws Exception {
