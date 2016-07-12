@@ -17,6 +17,15 @@ public class NumberAndMathTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
+    public void minMaxTest() throws Exception {
+        assertThat(Integer.MAX_VALUE, is(2_147_483_647));
+        assertThat(Integer.MIN_VALUE, is(-2_147_483_648));
+
+        assertThat(Long.MAX_VALUE, is(9_223_372_036_854_775_807L));
+        assertThat(Long.MIN_VALUE, is(-9_223_372_036_854_775_808L));
+    }
+
+    @Test
     public void valueOfNumberFormatExceptionTest() throws Exception {
         assertThat(Integer.valueOf("1"), is(1));
 
