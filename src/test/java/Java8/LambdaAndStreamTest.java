@@ -222,6 +222,11 @@ public class LambdaAndStreamTest {
     @Test
     public void arrayStreamTest() throws Exception {
         assertThat(Arrays.stream(new int[] {1, 2, 3}).sum(), is(6));
+
+        int[] arr = new int[] {1, 2, 3};
+        assertThat(Arrays.stream(arr, 0, 1).toArray(), is(new int[]{1}));
+        assertThat(Arrays.stream(arr, 0, arr.length).toArray(), is(new int[]{1, 2, 3}));
+        assertThat(Arrays.stream(arr, 2, arr.length).toArray(), is(new int[]{3}));
     }
 
     @Test
