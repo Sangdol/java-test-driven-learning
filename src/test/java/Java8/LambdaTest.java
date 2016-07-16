@@ -2,6 +2,7 @@ package Java8;
 
 import org.junit.Test;
 
+import java.util.*;
 import java.util.function.*;
 
 import static org.hamcrest.Matchers.is;
@@ -11,6 +12,16 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class LambdaTest {
+    
+    @Test
+    public void comparatorTest() throws Exception {
+        Integer[] arr = new Integer[]{1, 2, 3};
+
+        Comparator<Integer> comp = (Integer o1, Integer o2) -> o2.compareTo(o1);
+        Arrays.sort(arr, comp);
+
+        assertThat(arr, is(new Integer[]{3, 2, 1}));
+    }
     
     @Test
     public void functionTest() throws Exception {
