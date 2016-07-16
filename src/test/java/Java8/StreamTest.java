@@ -55,7 +55,7 @@ import static org.hamcrest.Matchers.*;
  *
  * @author hugh
  */
-public class LambdaAndStreamTest {
+public class StreamTest {
 
     List<Person> roster = new ArrayList<>();
 
