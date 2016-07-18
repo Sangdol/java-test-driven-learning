@@ -65,13 +65,33 @@ public class ObjectsTest {
         }
     }
 
+    /**
+     * http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
+     */
     @Test
-    public void equalsTest() throws Exception {
+    public void reflexiveEqualsTest() throws Exception {
+        Person person = new Person("SD", 34);
+        assertThat(person.equals(person), is(true));
+    }
+
+    @Test
+    public void notSymmetricEqualsTest() throws Exception {
         Person person = new Person("SD", 34);
         Child child = new Child("SD", 14);
 
         assertTrue(person.equals(child));
         assertFalse(child.equals(person));
+    }
+
+    @Test
+    public void notTransitiveEqualsTest() throws Exception {
+        Person person1 = new Person("SD", 34);
+        Person person2 = new Person("SD", 34);
+        Person person3 = new Person("SD", 34);
+
+        assertThat(person1.equals(person2), is(true));
+        assertThat(person2.equals(person3), is(true));
+        assertThat(person1.equals(person3), is(true));
     }
 
     /**
