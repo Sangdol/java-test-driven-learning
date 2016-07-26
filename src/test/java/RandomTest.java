@@ -15,6 +15,17 @@ import static org.junit.Assert.assertThat;
 public class RandomTest {
 
     private Random random = new Random();
+    
+    @Test
+    public void seedTest() throws Exception {
+        Random r = new Random(1L);
+        assertThat(r.nextInt(3), is(0));
+        assertThat(r.nextInt(3), is(1));
+        assertThat(r.nextInt(3), is(1));
+        assertThat(r.nextInt(3), is(0));
+        assertThat(r.nextInt(3), is(2));
+        assertThat(r.nextInt(3), is(1));
+    }
 
     @Test
     public void randomTest() throws Exception {
