@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThan;
@@ -12,6 +13,13 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class CollectionTest {
+    
+    @Test
+    public void concurrentHashSetInitTest() throws Exception {
+        Set<Integer> concurrentHashSet = Collections.newSetFromMap(new ConcurrentHashMap<>());
+        concurrentHashSet.add(1);
+        assertThat(concurrentHashSet.contains(1), is(true));
+    }
 
     @Test
     public void toStringTest() throws Exception {
@@ -136,7 +144,8 @@ public class CollectionTest {
         assertThat(list.get(0), is(1));
         assertThat(list.get(2), is(3));
 
-        Collections.sort(list, Comparator.reverseOrder());
+        // can call sort() thanks to 'default' keyword of Java 8
+        list.sort(Comparator.reverseOrder());
         assertThat(list.get(0), is(3));
         assertThat(list.get(2), is(1));
 
@@ -148,6 +157,7 @@ public class CollectionTest {
         Collections.sort(strList, Comparator.naturalOrder());
         assertThat(strList.get(0), is("1"));
         assertThat(strList.get(2), is("2"));
+
     }
 
     @Test
