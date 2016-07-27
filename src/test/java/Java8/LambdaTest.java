@@ -1,9 +1,11 @@
 package Java8;
 
+import lombok.*;
 import org.junit.Test;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,6 +14,42 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class LambdaTest {
+
+    /**
+     * https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
+     */
+    @Test
+    public void methodReferenceTest() throws Exception {
+        // Reference to a static method
+        Function<Integer, Double> toDouble = Double::valueOf;
+        assertThat(toDouble.apply(1), is(1d));
+
+        // Reference to an instant method of a particular object
+        Optional<Person> oPerson = Optional.of(new Person(1));
+        int age = oPerson.map(Person::getAge).get();
+        assertThat(age, is(1));
+
+        // Reference to an instant method of an arbitrary object of a particular type
+        Person person = new Person(10);
+        age = oPerson.map(person::getDoubleAge).get();
+        assertThat(age, is(2));
+
+        // Reference to a constructor
+        Stream<Integer> stream = Stream.of(1, 2, 3);
+        Integer[] arr = stream.toArray(Integer[]::new);
+        assertThat(arr[0], is(1));
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class Person {
+        int age;
+
+        int getDoubleAge(Person person) {
+            return person.getAge() * 2;
+        }
+    }
     
     @Test
     public void comparatorTest() throws Exception {
