@@ -2,6 +2,7 @@ import com.google.common.collect.Lists;
 import common.Person;
 import org.junit.Test;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 import static org.hamcrest.Matchers.is;
@@ -11,6 +12,37 @@ import static org.junit.Assert.assertThat;
  * @author hugh
  */
 public class GenericTest {
+
+    /**
+     * http://techblog.bozho.net/on-java-generics-and-erasure/
+     * http://tutorials.jenkov.com/java-reflection/generics.html
+     *
+     * You cannot see on a type itself what type it is parameterized to a runtime,
+     * but you can see it in fields and methods where it is used and parameterized.
+     * Its concrete parameterizations in other words.
+     */
+    @Test
+    public void erasureTest() throws Exception {
+        ParameterizedType type = (ParameterizedType) Bar.class.getGenericSuperclass();
+        assertThat(type.getActualTypeArguments()[0].toString(), is("class java.lang.String"));
+
+        ParameterizedType fieldType = (ParameterizedType) Foo.class.getField("children").getGenericType();
+        assertThat(fieldType.getActualTypeArguments()[0].toString(), is("class GenericTest$Bar"));
+
+        ParameterizedType paramType = (ParameterizedType) Foo.class.getMethod("foo", List.class)
+                        .getGenericParameterTypes()[0];
+        assertThat(paramType.getActualTypeArguments()[0].toString(), is("class java.lang.String"));
+        assertThat(Foo.class.getTypeParameters()[0].getBounds()[0].toString(), is("interface java.lang.CharSequence"));
+    }
+
+    @SuppressWarnings("unused") // only for reflection
+    class Foo<E extends CharSequence> {
+        public List<Bar> children = new ArrayList<>();
+        public List<StringBuilder> foo(List<String> foo) {return null; }
+        public void bar(List<? extends String> param) {}
+    }
+
+    class Bar extends Foo<String> {}
 
     /**
      * Producer Extends, Consumer Super (from the point of view of the collection)
@@ -165,6 +197,9 @@ public class GenericTest {
     private void cannotCreateArrays() throws Exception {
         // compile-error
         // List<Integer>[] arrayOfLists = new List<Integer>[2];
+
+        // can create an array with a reifiable type
+        List<?>[] arrayOfLists = new List<?>[2];
 
         Object[] strings = new String[2];
         strings[0] = "hi";
