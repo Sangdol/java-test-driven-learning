@@ -1,11 +1,6 @@
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.*;
+import lombok.*;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -93,6 +88,7 @@ public class JacksonTest {
     @Setter
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class NoNoArgsConstructor {
         int ageAge;
     }
@@ -121,6 +117,17 @@ public class JacksonTest {
         
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         assertThat(mapper.writeValueAsString(map), is("{\"camelCase\":1}"));
+    }
+
+    @Test
+    public void jsonToObject() throws Exception {
+        NoNoArgsConstructor noNoArgsConstructor = mapper.readValue("{\"ageAge\":1}", NoNoArgsConstructor.class);
+        assertThat(noNoArgsConstructor.getAgeAge(), is(1));
+
+        // http://stackoverflow.com/questions/4486787/jackson-with-json-unrecognized-field-not-marked-as-ignorable
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        noNoArgsConstructor = mapper.readValue("{\"ageAge\":1, \"unknown\":1}", NoNoArgsConstructor.class);
+        assertThat(noNoArgsConstructor.getAgeAge(), is(1));
     }
 
     @Test
