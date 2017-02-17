@@ -33,6 +33,9 @@ public class OptionalTest {
     public void ofNullableTest() throws Exception {
         Optional<String> abc = Optional.ofNullable("Abc");
         assertThat(abc.get(), is("Abc"));
+        
+        Optional<String> nulla = Optional.ofNullable(null);
+        assertThat(nulla.isPresent(), is(false));
     }
 
     @Test(expected = NoSuchElementException.class)
