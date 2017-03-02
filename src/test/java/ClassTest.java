@@ -14,6 +14,13 @@ import static org.hamcrest.Matchers.*;
 public class ClassTest {
 
     @Test
+    @SuppressWarnings("RedundantCast")
+    public void noExceptionWhenCastingNullTest() {
+        String nullString = (String) null;
+        assertNull(nullString);
+    }
+
+    @Test
     public void instanceOfTest() throws Exception {
         Integer i = 1;
         Double d = 1.0;
