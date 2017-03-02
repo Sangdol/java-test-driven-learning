@@ -16,6 +16,12 @@ public class UrlUriTest {
         assertThat(uri.getPath(), is("path"));
         assertThat(uri.toString(), is("path"));
 
+        URI emptyUri = URI.create("");
+        assertThat(emptyUri.getHost(), is(nullValue()));
+        assertThat(emptyUri.getScheme(), is(nullValue()));
+        assertThat(emptyUri.getPath(), is(""));
+        assertThat(emptyUri.toString(), is(""));
+
         URI newUri = URI.create("https://google.com/" + uri.getPath());
         assertThat(newUri.getHost(), is("google.com"));
         assertThat(newUri.getScheme(), is("https"));
