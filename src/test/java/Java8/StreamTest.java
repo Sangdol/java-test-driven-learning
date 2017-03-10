@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -307,6 +308,18 @@ public class StreamTest {
         assertThat(roster.stream().map(p -> p.age).reduce(0, (a, b) -> a + b), is(33 + 33));
         assertThat(roster.stream().map(p -> p.age).reduce(1, (a, b) -> a * b), is(33 * 33));
         assertThat(roster.stream().map(p -> p.age).reduce(0, Integer::sum), is(33 + 33));
+    }
+
+    @SuppressWarnings("unused")
+    @Test(expected = IllegalStateException.class)
+    public void testToMap() {
+        List<Pair<String, Integer>> pairs = new ArrayList<>();
+        pairs.add(Pair.of("A", 1));
+        pairs.add(Pair.of("B", 2));
+        pairs.add(Pair.of("A", 3));
+
+        Map<String, Pair<String, Integer>> pairMap = pairs.stream()
+                .collect(Collectors.toMap(Pair::getKey, Function.identity()));
     }
 
     /**
