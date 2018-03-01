@@ -1,5 +1,6 @@
 package Java8.Date;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.time.format.TextStyle;
 import java.time.temporal.*;
 import java.util.*;
@@ -605,6 +607,17 @@ public class StandardCalendarTest {
         assertThat(formatter.parse("2015-9-5", LocalDateTime::from).toString(), is("2015-09-05T00:00"));
         assertThat(formatter.parse("2015-10-01", LocalDateTime::from).toString(), is("2015-10-01T00:00"));
         assertThat(formatter.parse("2015-10-01 10:10", LocalDateTime::from).toString(), is("2015-10-01T10:10"));
+    }
+
+    /**
+     * Not lenient format, but lenient value
+     */
+    @Test
+    public void lenientParsing3() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                .withResolverStyle(ResolverStyle.LENIENT);
+
+        assertThat(formatter.parse("2015-15-01 10:10", LocalDateTime::from).toString(), is("2016-03-01T10:10"));
     }
 
     @Test(expected = DateTimeParseException.class)
