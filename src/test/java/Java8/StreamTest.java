@@ -408,4 +408,17 @@ public class StreamTest {
 
         assertThat(aiSum.get(), is(sum));
     }
+
+    @Test
+    public void charsTest() {
+        String s = "abbccc";
+        long aCount = s.chars().filter(c -> c == 'a').count();
+        assertThat(aCount, is(1L));
+
+        // https://stackoverflow.com/a/31557292/524588
+        char[] chars = s.toCharArray();
+        Stream<Character> cStream = IntStream.range(0, chars.length).mapToObj(i -> chars[i]);
+        aCount = cStream.filter(c -> c == 'a').count();
+        assertThat(aCount, is(1L));
+    }
 }
