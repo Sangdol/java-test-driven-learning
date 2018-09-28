@@ -27,12 +27,13 @@ public class UrlUriTest {
         assertThat(url, is("http://apache.org/shindig?hello+world=foo%26bar#foo"));
 
         url = new URIBuilder("https://abc.com/hey")
-                .addParameter("encode", "?")
+                .addParameter("encode1", "?")
+                .addParameter("encode2", "=&?")
                 .addParameter("null1", null)
                 .addParameter("null2", null)
                 .toString();
         
-        assertThat(url, is("https://abc.com/hey?encode=%3F&null1&null2"));
+        assertThat(url, is("https://abc.com/hey?encode1=%3F&encode2=%3D%26%3F&null1&null2"));
     }
 
     @Test
