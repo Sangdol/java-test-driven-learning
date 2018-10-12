@@ -1,11 +1,16 @@
 import common.Person;
-import org.junit.*;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-import java.lang.reflect.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author hugh
@@ -50,6 +55,10 @@ public class ReflectionTest {
         
         assertThat(age, is(notNullValue()));
         assertThat(age.getName(), is("age"));
+
+        Person p = new Person();
+        age.setAccessible(true);
+        assertThat(age.get(p), is(1));
 
         exception.expect(NoSuchFieldException.class);
         Person.class.getDeclaredField("notExist");
