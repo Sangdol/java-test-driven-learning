@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,6 +15,11 @@ public class JunitTest {
      */
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    @Before
+    public void setup() {
+        // setup
+    }
 
     @Test
     public void exceptionTest() throws Exception {
