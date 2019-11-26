@@ -245,5 +245,16 @@ public class CollectionTest {
         assertThat(map.get(2), is("2two"));
         assertThat(map.computeIfAbsent(3, String::valueOf), is("3"));
     }
-    
+
+    @Test
+    public void mapComputeIfAbsent() {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        map.computeIfAbsent(1, ArrayList::new).add(1);
+        assertThat(map.get(1).size(), is(1));
+
+        // Does computeIfAbsent returns the new list when it's not absent? Yes.
+        map.computeIfAbsent(1, ArrayList::new).add(1);
+        assertThat(map.get(1).size(), is(2));
+    }
 }
