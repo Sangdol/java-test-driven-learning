@@ -47,17 +47,22 @@ public class GenericTest {
     /**
      * Producer Extends, Consumer Super (from the point of view of the collection)
      *
+     * https://dzone.com/articles/covariance-and-contravariance
      * http://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java
      */
     @Test
     public void pecsTest() throws Exception {
-        // invariant (arrays covariant)
+        // covariance - producer / cannot add a value
         List<? extends Number> numbers = Lists.newArrayList(1, 2, 3);
         assertThat(numbers.toString(), is("[1, 2, 3]"));
+
+        // It's not allowed to add to avoid a runtime error.
+        // numbers.add(1.1); // compile error
 
         numbers = Lists.newArrayList(1L, 2L, 3L);
         assertThat(numbers.toString(), is("[1, 2, 3]"));
 
+        // contravariance - consumer / cannot get and assign a value
         List<? super Integer> is = new ArrayList<>();
         is.add(1);
         assertThat(is.toString(), is("[1]"));
@@ -69,6 +74,10 @@ public class GenericTest {
         List<? super Integer> os = new ArrayList<Object>();
         os.add(1);
         assertThat(os.toString(), is("[1]"));
+        assertThat(os.get(0), is(1)); // get is okay
+
+        // Incompatible type
+        // int a = os.get(0); // compiler error
     }
 
     /**
