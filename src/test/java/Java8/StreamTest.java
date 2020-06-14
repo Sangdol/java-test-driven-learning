@@ -421,4 +421,14 @@ public class StreamTest {
         aCount = cStream.filter(c -> c == 'a').count();
         assertThat(aCount, is(1L));
     }
+
+    @Test
+    public void characterArrayListToString() {
+        List<Character> chars = new ArrayList<>();
+        chars.add('a');
+        chars.add('b');
+        
+        String str = chars.stream().map(Object::toString).collect(Collectors.joining());
+        assertThat(str, is("ab"));
+    }
 }

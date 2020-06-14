@@ -17,6 +17,16 @@ import static org.hamcrest.Matchers.*;
  */
 public class GuavaTest {
 
+    @Test
+    public void characterArrayListToString() {
+        List<Character> chars = new ArrayList<>();
+        chars.add('a');
+        chars.add('b');
+
+        String ab = Joiner.on("").join(chars);
+        assertThat(ab, is("ab"));
+    }
+
     /**
      * http://stackoverflow.com/questions/12026885/common-util-to-break-a-list-into-batch
      */

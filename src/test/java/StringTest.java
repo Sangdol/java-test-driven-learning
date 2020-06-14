@@ -13,6 +13,22 @@ import static org.hamcrest.Matchers.*;
  */
 public class StringTest {
 
+    @Test
+    public void characterTest() {
+        Character a = 'a';
+        Character b = 'b';
+
+       assertThat(a + b, is(195));
+
+       String str = "";
+       str += a;
+       str += b;
+       assertThat(str, is("ab"));
+       
+       char ca = a;
+       assertThat(ca, is('a'));
+    }
+
     /**
      * http://stackoverflow.com/questions/11700320/is-string-literal-pool-a-collection-of-references-to-the-string-object-or-a-col/11701016#11701016
      */
