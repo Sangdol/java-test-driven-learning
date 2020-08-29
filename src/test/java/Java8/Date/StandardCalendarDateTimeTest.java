@@ -24,7 +24,7 @@ import static java.time.temporal.ChronoField.*;
  * @author hugh
  */
 @SuppressWarnings("ALL")
-public class StandardCalendarTest {
+public class StandardCalendarDateTimeTest {
     
     private Locale defaultLocale = Locale.getDefault();
     private ZoneId UTC = ZoneId.of("UTC");
