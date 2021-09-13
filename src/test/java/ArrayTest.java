@@ -80,6 +80,9 @@ public class ArrayTest {
 
         matrix = new int[2][];
         assertThat(matrix[0], is(nullValue()));
+
+        boolean[] bs = new boolean[10];
+        assertThat(bs[0], is(false));
     }
 
     /**
